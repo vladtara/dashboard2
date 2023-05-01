@@ -1,9 +1,5 @@
 # Dashboard
 
-[![Docker Cloud Build Status][shield-docker]][docker]
-[![Docker Image Size (latest)][shield-docker-image]][docker]
-[![GitHub license][shield-license]][license]
-
 ![Alt text](/screenshot.png?raw=true "screenshot")
 
 Dashboard is just that - a dashboard. It's inspired by [SUI](https://github.com/jeroenpardon/sui) and has all the same features as SUI, such as simple customization through JSON-files and a handy search bar to search the internet more efficiently.
@@ -22,22 +18,10 @@ So what makes this project different from (or even better than) SUI?
 The recommended way of installation is using [Docker](https://docker.com). You could also build your own version from source, but do proceed at your own risk.
 
 ### Docker
-
-The Docker image is built on top of [this image](https://github.com/ratisbona-coding/nginx-cloudflare-cache), as it's based on Nginx and also provides functionality to purge the Cloudflare cache every time the container restarts (though this functionality is entirely optional).
-
 The Docker image is available on both [DockerHub](docker) and the GitHub Container Repository (GHCR, see "packages").
 
 1. Using the Docker CLI:
 
-```sh
-$ docker run -d \
-  -e CLOUDFLARE_ZONE_ID=[OPTIONAL CLOUDFLARE V4 ZONE ID] \
-  -e CLOUDFLARE_PURGE_TOKEN=[OPTIONAL CLOUDFLARE PURGE TOKEN] \
-  -v $(pwd)/data:/app/data \
-  -p 8080:8080 \
-  --name=dashboard \
-  phntxx/dashboard
-```
 ```sh
 docker run -it --rm \
   -v $(pwd)/data:/app/data \
@@ -45,25 +29,6 @@ docker run -it --rm \
   --name=dashboard \
   phntxx/dashboard
 ```
-
-2. Using Docker-Compose:
-
-```yml
-version: "3"
-
-services:
-  dashboard:
-    image: phntxx/dashboard:latest
-    restart: unless-stopped
-    environment:
-      - CLOUDFLARE_ZONE_ID=[OPTIONAL CLOUDFLARE V4 ZONE ID]
-      - CLOUDFLARE_PURGE_TOKEN=[OPTIONAL CLOUDFLARE PURGE TOKEN]
-    volumes:
-      - [path to data directory]:/app/data
-    ports:
-      - 8080:8080
-```
-
 ### Compile from source
 
 I really don't anticipate people to use this, so go forth at your own risk.
@@ -256,14 +221,3 @@ In order for the imprint-modal to show up, make sure your `imprint.json` resembl
   }
 }
 ```
-
-> :exclamation: I haven't quite tested this. I'm not a lawyer and I'm not responsible if you're sued for using this incorrectly.
-
-[docker]: https://hub.docker.com/r/phntxx/dashboard
-[codecov]: https://codecov.io/gh/phntxx/dashboard
-[repo]: https://github.com/phntxx/dashboard
-[license]: https://github.com/phntxx/dashboard/LICENSE
-[shield-docker]: https://img.shields.io/docker/cloud/build/phntxx/dashboard
-[shield-docker-image]: https://img.shields.io/docker/image-size/phntxx/dashboard/latest
-[shield-codecov]: https://codecov.io/gh/phntxx/dashboard/branch/master/graph/badge.svg
-[shield-license]: https://img.shields.io/github/license/phntxx/dashboard.svg
