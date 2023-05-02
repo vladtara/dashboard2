@@ -88,3 +88,4 @@ jobs:
           tags: |
             glapss/dashboard:latest
             ghcr.io/vlidtara/dashboard2:latest
+            ghcr.io/vlidtara/dashboard2:latest

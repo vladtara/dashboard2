@@ -1,0 +1,519 @@
+# -- Count of replicas
+replicaCount: 1
+
+# -- Image section
+image:
+  # -- Repository name (including the image name and tag)
+  repository: ghcr.io/vlidtara/dashboard2
+  # -- Image pull policy (e.g. Always, IfNotPresent, Never)
+  pullPolicy: IfNotPresent
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+# -- Authentication credentials for pulling the image
+imagePullSecrets:
+  {}
+  # name: docker-key-json
+
+# -- Override the default name of the chart
+nameOverride: "dashboard"
+# -- Override the default fullname of the chart
+fullnameOverride: ""
+
+# -- Service Account configuration
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# -- Annotations to be added to the pod
+podAnnotations:
+  app-name: dashboard
+
+# -- Pod Security Context configuration
+podSecurityContext:
+  {}
+  # fsGroup: 2000
+
+# -- Security Context configuration for the container
+securityContext:
+  {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# -- Service configuration
+service:
+  # -- Service type (e.g. ClusterIP, NodePort, LoadBalancer)
+  type: ClusterIP
+  # -- Service port
+  port: 80
+
+# -- Ingress configuration
+ingress:
+  enabled: false
+  className: ""
+  annotations:
+    {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+# -- Liveness probe configuration
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+# -- Readiness probe configuration
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+# -- Resource limits and requests configuration
+resources:
+  limits:
+    cpu: 100m
+    memory: 100Mi
+  requests:
+    cpu: 200m
+    memory: 200Mi
+
+# -- Pod Ports configuration
+podPorts:
+  - name: http
+    containerPort: 8080
+    protocol: TCP
+
+# -- Autoscaling configuration
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+# -- Node Selector configuration
+nodeSelector: {}
+
+# -- Tolerations configuration
+tolerations: []
+# -- Affinity configuration
+affinity: {}
+
+# -- Dashboard default configs
+configs:
+  greeter.json:
+    {
+      "greeter":
+        {
+          "months":
+            [
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December",
+            ],
+          "days":
+            [
+              "Sunday",
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+            ],
+          "greetings":
+            [
+              { "greeting": "Good night!", "start": 0, "end": 6 },
+              { "greeting": "Good morning!", "start": 6, "end": 12 },
+              { "greeting": "Good afternoon!", "start": 12, "end": 18 },
+              { "greeting": "Good evening!", "start": 18, "end": 24 },
+            ],
+          "dateformat": "%wd, %m %d%e %y",
+        },
+    }
+  # apps.json:
+  #   {
+  #     "categories": [
+  #       {
+  #         "name": "Networking",
+  #         "items": [
+  #           {
+  #             "name": "pfSense",
+  #             "displayURL": "example.com",
+  #             "url": "https://example.com",
+  #             "icon": "security"
+  #           },
+  #           {
+  #             "name": "Pihole",
+  #             "displayURL": "example.com",
+  #             "url": "https://example.com",
+  #             "icon": "vpn_lock"
+  #           }
+  #         ]
+  #       },
+  #       {
+  #         "name": "Monitoring",
+  #         "items": [
+  #           {
+  #             "name": "Tautulli",
+  #             "displayURL": "example.com",
+  #             "url": "https://example.com",
+  #             "icon": "bar_chart"
+  #           },
+  #           {
+  #             "name": "Grafana",
+  #             "displayURL": "example.com",
+  #             "url": "https://example.com",
+  #             "icon": "show_chart"
+  #           }
+  #         ]
+  #       }
+  #     ],
+  #     "apps": [
+  #       {
+  #         "name": "Plex",
+  #         "displayURL": "example.com",
+  #         "url": "https://example.com",
+  #         "icon": "tv"
+  #       },
+  #       {
+  #         "name": "NextCloud",
+  #         "displayURL": "example.com",
+  #         "url": "https://example.com",
+  #         "icon": "filter_drama"
+  #       },
+  #       {
+  #         "name": "Ghost",
+  #         "displayURL": "example.com",
+  #         "url": "https://example.com",
+  #         "icon": "rss_feed"
+  #       },
+  #       {
+  #         "name": "Minecraft",
+  #         "displayURL": "example.com",
+  #         "url": "https://example.com",
+  #         "icon": "games"
+  #       },
+
+  #       {
+  #         "name": "ESXi",
+  #         "displayURL": "example.com",
+  #         "url": "https://example.com",
+  #         "icon": "dns"
+  #       }
+  #     ]
+  #   }
+  # bookmarks.json:
+  #   {
+  #     "groups": [
+  #       {
+  #         "name": "Wikis",
+  #         "items": [
+  #           {
+  #             "name": "Wikipedia",
+  #             "url": "https://en.wikipedia.org/"
+  #           },
+  #           {
+  #             "name": "Arch Linux Wiki",
+  #             "url": "https://archlinux.org/"
+  #           }
+  #         ]
+  #       },
+  #       {
+  #         "name": "Dev",
+  #         "items": [
+  #           {
+  #             "name": "Codepen",
+  #             "url": "https://codepen.io/"
+  #           },
+  #           {
+  #             "name": "JSFiddle",
+  #             "url": "https://jsfiddle.net/"
+  #           },
+  #           {
+  #             "name": "Pastebin",
+  #             "url": "https://pastebin.com/"
+  #           }
+  #         ]
+  #       },
+  #       {
+  #         "name": "Media",
+  #         "items": [
+  #           {
+  #             "name": "Soundcloud",
+  #             "url": "https://soundcloud.com"
+  #           },
+  #           {
+  #             "name": "YouTube",
+  #             "url": "https://youtube.com"
+  #           },
+  #           {
+  #             "name": "Twitch",
+  #             "url": "https://twitch.tv"
+  #           }
+  #         ]
+  #       },
+  #       {
+  #         "name": "Social Networks",
+  #         "items": [
+  #           {
+  #             "name": "Facebook",
+  #             "url": "https://facebook.com"
+  #           },
+  #           {
+  #             "name": "Twitter",
+  #             "url": "https://twitter.com"
+  #           },
+  #           {
+  #             "name": "Instagram",
+  #             "url": "https://instagram.com"
+  #           }
+  #         ]
+  #       },
+  #       {
+  #         "name": "Imageboards",
+  #         "items": [
+  #           {
+  #             "name": "Reddit",
+  #             "url": "https://reddit.com"
+  #           },
+  #           {
+  #             "name": "4chan",
+  #             "url": "https://4chan.org"
+  #           }
+  #         ]
+  #       },
+  #       {
+  #         "name": "Tech",
+  #         "items": [
+  #           {
+  #             "name": "Hackernoon",
+  #             "url": "https://hackernoon.com"
+  #           },
+  #           {
+  #             "name": "The Verge",
+  #             "url": "https://theverge.com"
+  #           },
+  #           {
+  #             "name": "Hackernews",
+  #             "url": "https://news.ycombinator.com"
+  #           }
+  #         ]
+  #       }
+  #     ]
+  #   }
+  # search.json:
+  #   {
+  #     "placeholder": "",
+  #     "defaultProvider": "https://google.com/search?q=",
+  #     "autoFocus": false,
+  #     "providers": [
+  #       {
+  #         "name": "Allmusic",
+  #         "url": "https://www.allmusic.com/search/all/",
+  #         "prefix": "/a"
+  #       },
+  #       {
+  #         "name": "Discogs",
+  #         "url": "https://www.discogs.com/search/?q=",
+  #         "prefix": "/di"
+  #       },
+  #       {
+  #         "name": "Duck Duck Go",
+  #         "url": "https://duckduckgo.com/?q=",
+  #         "prefix": "/d"
+  #       },
+  #       {
+  #         "name": "iMDB",
+  #         "url": "https://www.imdb.com/find?q=",
+  #         "prefix": "/i"
+  #       },
+  #       {
+  #         "name": "TheMovieDB",
+  #         "url": "https://www.themoviedb.org/search?query=",
+  #         "prefix": "/m"
+  #       },
+  #       {
+  #         "name": "Reddit",
+  #         "url": "https://www.reddit.com/search?q=",
+  #         "prefix": "/r"
+  #       },
+  #       {
+  #         "name": "Qwant",
+  #         "url": "https://www.qwant.com/?q=",
+  #         "prefix": "/q"
+  #       },
+  #       {
+  #         "name": "Soundcloud",
+  #         "url": "https://soundcloud.com/search?q=",
+  #         "prefix": "/so"
+  #       },
+  #       {
+  #         "name": "Spotify",
+  #         "url": "https://open.spotify.com/search/results/",
+  #         "prefix": "/s"
+  #       },
+  #       {
+  #         "name": "TheTVDB",
+  #         "url": "https://www.thetvdb.com/search?q=",
+  #         "prefix": "/tv"
+  #       },
+  #       {
+  #         "name": "Trakt",
+  #         "url": "https://trakt.tv/search?query=",
+  #         "prefix": "/t"
+  #       },
+  #       {
+  #         "name": "YouTube",
+  #         "url": "https://youtube.com/results?search_query=",
+  #         "prefix": "/yt"
+  #       }
+  #     ]
+  #   }
+  # themes.json:
+  #   {
+  #     "themes": [
+  #       {
+  #         "label": "Classic",
+  #         "value": 0,
+  #         "mainColor": "#000000",
+  #         "accentColor": "#1e272e",
+  #         "backgroundColor": "#ffffff"
+  #       },
+  #       {
+  #         "label": "Dark",
+  #         "value": 1,
+  #         "mainColor": "#ffffff",
+  #         "accentColor": "#999999",
+  #         "backgroundColor": "#000000"
+  #       },
+  #       {
+  #         "label": "Raw",
+  #         "value": 2,
+  #         "mainColor": "",
+  #         "accentColor": "",
+  #         "backgroundColor": "#ffffff"
+  #       },
+  #       {
+  #         "label": "Blackboard",
+  #         "value": 3,
+  #         "mainColor": "#fffdea",
+  #         "accentColor": "#5c5c5c",
+  #         "backgroundColor": "#1a1a1a"
+  #       },
+  #       {
+  #         "label": "Gazette",
+  #         "value": 4,
+  #         "mainColor": "#000000",
+  #         "accentColor": "#5c5c5c",
+  #         "backgroundColor": "#F2F7FF"
+  #       },
+  #       {
+  #         "label": "Espresso",
+  #         "value": 5,
+  #         "mainColor": "#d1b59a",
+  #         "accentColor": "#4e4e4e",
+  #         "backgroundColor": "#21211f"
+  #       },
+  #       {
+  #         "label": "Cab",
+  #         "value": 6,
+  #         "mainColor": "#1f1f1f",
+  #         "accentColor": "#424242",
+  #         "backgroundColor": "#f6d305"
+  #       },
+  #       {
+  #         "label": "Cloud",
+  #         "value": 7,
+  #         "mainColor": "#35342f",
+  #         "accentColor": "#37bbe4",
+  #         "backgroundColor": "#f1f2f0"
+  #       },
+  #       {
+  #         "label": "Lime",
+  #         "value": 8,
+  #         "mainColor": "#aabbc3",
+  #         "accentColor": "#aeea00",
+  #         "backgroundColor": "#263238"
+  #       },
+  #       {
+  #         "label": "White",
+  #         "value": 9,
+  #         "mainColor": "#222222",
+  #         "accentColor": "#dddddd",
+  #         "backgroundColor": "#ffffff"
+  #       },
+  #       {
+  #         "label": "Tron",
+  #         "value": 10,
+  #         "mainColor": "#effbff",
+  #         "accentColor": "#6ee2ff",
+  #         "backgroundColor": "#242b33"
+  #       },
+  #       {
+  #         "label": "Blues",
+  #         "value": 11,
+  #         "mainColor": "#eff1fc",
+  #         "accentColor": "#6677eb",
+  #         "backgroundColor": "#2b2c56"
+  #       },
+  #       {
+  #         "label": "Passion",
+  #         "value": 12,
+  #         "mainColor": "#12005e",
+  #         "accentColor": "#8e24aa",
+  #         "backgroundColor": "#f5f5f5"
+  #       },
+  #       {
+  #         "label": "Chalk",
+  #         "value": 13,
+  #         "mainColor": "#aabbc3",
+  #         "accentColor": "#ff869a",
+  #         "backgroundColor": "#263238"
+  #       },
+  #       {
+  #         "label": "Paper",
+  #         "value": 14,
+  #         "mainColor": "#4c432e",
+  #         "accentColor": "#aa9a73",
+  #         "backgroundColor": "#f8f6f1"
+  #       }
+  #     ]
+  #   }

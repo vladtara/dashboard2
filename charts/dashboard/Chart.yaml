@@ -1,0 +1,15 @@
+apiVersion: v2
+appVersion: 1.0.0
+name: dashboard
+description: A General Helm chart for K8s dashboard application
+keywords:
+  - dashboard
+kubeVersion: ">=1.22.0-0"
+maintainers:
+  - name: vlidtara
+    email: vlad@glaps.fun
+    url: https://github.com/vlidtara/dashboard2/charts/dashboard
+sources:
+  - https://github.com/vlidtara/dashboard2/charts/dashboard
+type: application
+version: 1.0.0

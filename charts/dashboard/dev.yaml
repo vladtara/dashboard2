@@ -1,0 +1,54 @@
+replicaCount: 1
+image:
+  repository: glapss/dashboard
+  tag: "latest"
+
+ingress:
+  enabled: true
+  className: "internal-nginx"
+  hosts:
+    - host: dashboard.12.10.10.5.nip.io
+      paths:
+        - path: /
+          pathType: Prefix
+
+podPorts:
+  - name: http
+    containerPort: 8080
+    protocol: TCP
+
+configs:
+  search.json:
+    {
+      "placeholder": "",
+      "defaultProvider": "https://google.com/search?q=",
+      "autoFocus": false,
+      "providers":
+        [
+          {
+            "name": "Duck Duck Go",
+            "url": "https://duckduckgo.com/?q=",
+            "prefix": "/d",
+          },
+        ],
+    }
+  themes.json:
+    {
+      "themes":
+        [
+          {
+            "label": "Classic",
+            "value": 0,
+            "mainColor": "#000000",
+            "accentColor": "#1e272e",
+            "backgroundColor": "#ffffff",
+          },
+          {
+            "label": "Dark",
+            "value": 1,
+            "mainColor": "#ffffff",
+            "accentColor": "#999999",
+            "backgroundColor": "#000000",
+          },
+        ],
+    }
