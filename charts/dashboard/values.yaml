@@ -99,11 +99,11 @@ readinessProbe:
 # -- Resource limits and requests configuration
 resources:
   limits:
-    cpu: 100m
-    memory: 100Mi
-  requests:
     cpu: 200m
     memory: 200Mi
+  requests:
+    cpu: 100m
+    memory: 100Mi
 
 # -- Pod Ports configuration
 podPorts:
