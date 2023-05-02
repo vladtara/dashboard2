@@ -87,4 +87,4 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
           tags: |
             glapss/dashboard:latest
-            ghcr.io/vlidtara/dashboard:latest
+            ghcr.io/vlidtara/dashboard2:latest
