@@ -58,6 +58,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [style, dashboard]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Push Helm chart to OCI compatible registry (Github)
         uses: bsord/helm-push@v4.1.0
         with:
@@ -66,7 +69,7 @@ jobs:
           username: ${{ github.actor }}
           access-token: ${{ secrets.GITHUB_TOKEN }}
           force: true
-          chart-folder: charts/dashboard
+          chart-folder: ./charts/dashboard
 
   build-image:
     runs-on: ubuntu-latest
