@@ -12,4 +12,5 @@ In summary, please make sure the following two commands run without issue before
 ```sh
 yarn prettier
 yarn test
+
 ```
