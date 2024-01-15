@@ -4,7 +4,7 @@ replicaCount: 1
 # -- Image section
 image:
   # -- Repository name (including the image name and tag)
-  repository: ghcr.io/vlidtara/dashboard2
+  repository: ghcr.io/vladtara/dashboard2
   # -- Image pull policy (e.g. Always, IfNotPresent, Never)
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
